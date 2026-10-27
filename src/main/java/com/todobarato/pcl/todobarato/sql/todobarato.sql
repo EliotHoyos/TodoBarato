@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2026 a las 04:44:57
+-- Tiempo de generación: 27-10-2026 a las 03:38:23
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -12,10 +12,6 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `todobarato`
@@ -28,11 +24,19 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `marcas` (
-  `id` int(11) NOT NULL,
+  `idmarca` int(11) NOT NULL,
   `nombre` varchar(200) NOT NULL,
+  `estado` tinyint(1) NOT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `marcas`
+--
+
+INSERT INTO `marcas` (`idmarca`, `nombre`, `estado`, `created_at`, `updated_at`) VALUES
+(1, 'Toyota', 1, '2026-10-27 03:31:46', '2026-10-27 03:31:46');
 
 -- --------------------------------------------------------
 
@@ -42,7 +46,7 @@ CREATE TABLE `marcas` (
 
 CREATE TABLE `productos` (
   `id` int(11) NOT NULL,
-  `id_compras` int(11) NOT NULL,
+  `id_marca` int(11) NOT NULL,
   `nombre` varchar(200) NOT NULL,
   `descripcion` varchar(200) NOT NULL,
   `talla` varchar(100) NOT NULL,
@@ -61,7 +65,7 @@ CREATE TABLE `productos` (
 -- Indices de la tabla `marcas`
 --
 ALTER TABLE `marcas`
-  ADD PRIMARY KEY (`id`),
+  ADD PRIMARY KEY (`idmarca`),
   ADD UNIQUE KEY `nombre` (`nombre`);
 
 --
@@ -69,7 +73,7 @@ ALTER TABLE `marcas`
 --
 ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `id_compras_idx` (`id_compras`);
+  ADD KEY `id_compras_idx` (`id_marca`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -79,7 +83,7 @@ ALTER TABLE `productos`
 -- AUTO_INCREMENT de la tabla `marcas`
 --
 ALTER TABLE `marcas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idmarca` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT de la tabla `productos`
@@ -95,7 +99,7 @@ ALTER TABLE `productos`
 -- Filtros para la tabla `productos`
 --
 ALTER TABLE `productos`
-  ADD CONSTRAINT `id_compras` FOREIGN KEY (`id_compras`) REFERENCES `marcas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `id_compras` FOREIGN KEY (`id_marca`) REFERENCES `marcas` (`idmarca`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
