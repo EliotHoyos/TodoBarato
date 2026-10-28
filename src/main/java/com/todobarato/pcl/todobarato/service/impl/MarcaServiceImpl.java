@@ -17,7 +17,15 @@ public class MarcaServiceImpl implements MarcaService {
 
     @Override
     public MarcaResponseDTO crear(MarcaRequestDTO request) {
-        return null;
+        String nombreTrim = request.getNombre().trim();
+        if(marcaRepository.findByNombre(nombreTrim).isPresent()){
+            throw new IllegalArgumentException("Ya Existe un nombre de la marca : " + nombreTrim);
+        }
+        Marca marca = Marca.builder()
+                .nombre(nombreTrim)
+                .estado(request.getEstado() != null ? request.getEstado() : true)
+                .build();
+        return mapToResponseDTO(marcaRepository.save(marca));
     }
 
     @Override
