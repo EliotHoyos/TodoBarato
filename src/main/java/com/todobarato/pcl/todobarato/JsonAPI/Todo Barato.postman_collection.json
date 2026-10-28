@@ -1,0 +1,54 @@
+{
+  "info": {
+    "_postman_id": "6e419fd1-4f3d-4bdf-8a2c-72f34709973c",
+    "name": "Todo Barato",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43887550",
+    "_collection_link": "https://go.postman.co/collection/43887550-6e419fd1-4f3d-4bdf-8a2c-72f34709973c?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Mostrar Todas las Marcas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{urlTodoBarato}}/marcas",
+          "host": [
+            "{{urlTodoBarato}}"
+          ],
+          "path": [
+            "marcas"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Crear Nueva Marca",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"nombre\":\"Nazda\",\r\n    \"estado\":true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{urlTodoBarato}}/marcas",
+          "host": [
+            "{{urlTodoBarato}}"
+          ],
+          "path": [
+            "marcas"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
