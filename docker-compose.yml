@@ -1,0 +1,38 @@
+services:
+  mysql-db:
+    image: mysql:8.0
+    container_name: todobarato-mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: todobarato
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_todobarato_data:/var/lib/mysql
+    networks:
+      - todobarato-net
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: mi-app-todobarato
+    restart: on-failure
+    depends_on:
+      - mysql-db
+    ports:
+      - "8081:8080"
+    environment:
+      DB_HOST: mysql-db
+      DB_PORT: 3306
+      DB_NAME: todobarato
+      DB_USER: root
+      DB_PASSWORD: root
+      JPA_DDL_AUTO: update
+    networks:
+      - todobarato-net
+volumes:
+  mysql-todobarato_data
+networks:
+  todobarato-net:
+    driver: bridge
