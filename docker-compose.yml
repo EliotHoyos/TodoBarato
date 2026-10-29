@@ -32,7 +32,7 @@ services:
     networks:
       - todobarato-net
 volumes:
-  mysql-todobarato_data
+  mysql_todobarato_data:
 networks:
   todobarato-net:
     driver: bridge
