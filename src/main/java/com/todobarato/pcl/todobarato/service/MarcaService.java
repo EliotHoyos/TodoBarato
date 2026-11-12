@@ -10,5 +10,5 @@ public interface MarcaService {
     List<MarcaResponseDTO> listarTodos();
     MarcaResponseDTO buscarPorId(Integer idmarca);
     MarcaResponseDTO actualizar(Integer idmarca, MarcaRequestDTO request);
-    void eliminar(Integer idmarcar);
+    void eliminar(Integer idmarca);
 }
