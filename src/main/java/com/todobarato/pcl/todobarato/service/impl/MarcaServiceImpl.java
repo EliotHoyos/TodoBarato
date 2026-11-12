@@ -39,7 +39,8 @@ public class MarcaServiceImpl implements MarcaService {
 
     @Override
     public MarcaResponseDTO buscarPorId(Integer idmarca) {
-        return null;
+        Marca marca = buscarEntidadPorId(idmarca);
+        return mapToResponseDTO(marca);
     }
 
     @Override
@@ -65,8 +66,9 @@ public class MarcaServiceImpl implements MarcaService {
     }
 
     @Override
-    public void eliminar(Integer idmarcar) {
-
+    public void eliminar(Integer idmarca) {
+        Marca marca = buscarEntidadPorId(idmarca);
+        marcaRepository.delete(marca);
     }
 
     private MarcaResponseDTO mapToResponseDTO(Marca marca){
