@@ -2,6 +2,7 @@ package com.todobarato.pcl.todobarato.service.impl;
 
 import com.todobarato.pcl.todobarato.dto.request.MarcaRequestDTO;
 import com.todobarato.pcl.todobarato.dto.response.MarcaResponseDTO;
+import com.todobarato.pcl.todobarato.exception.ResourceNotFoundException;
 import com.todobarato.pcl.todobarato.model.entity.Marca;
 import com.todobarato.pcl.todobarato.repository.MarcaRepository;
 import com.todobarato.pcl.todobarato.service.MarcaService;
@@ -43,7 +44,29 @@ public class MarcaServiceImpl implements MarcaService {
 
     @Override
     public MarcaResponseDTO actualizar(Integer idmarca, MarcaRequestDTO request) {
-        return null;
+        Marca marca = buscarEntidadPorId(idmarca);
+        String nombreTrim = request.getNombre().trim();
+        marcaRepository.findByNombre(nombreTrim)
+                .filter(otra -> !otra.getIdmarca().equals(idmarca))
+                .ifPresent(otra -> {
+                    throw new IllegalArgumentException("Ya existe marca con el nombre: " + nombreTrim);
+                });
+        marca.setNombre(nombreTrim);
+        marca.setEstado(request.getEstado() != null ? request.getEstado() : true);
+        marcaRepository.save(marca);
+        return mapToResponseDTO(marca);
+    }
+
+    private Marca buscarEntidadPorId(Integer idmarca){
+        return marcaRepository.findById(idmarca)
+                .orElseThrow(() -> {
+                    return new ResourceNotFoundException("No existe una marca con id: " + idmarca);
+                });
+    }
+
+    @Override
+    public void eliminar(Integer idmarcar) {
+
     }
 
     private MarcaResponseDTO mapToResponseDTO(Marca marca){
